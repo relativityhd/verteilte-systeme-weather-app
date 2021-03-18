@@ -1,10 +1,11 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
-const apiRouter = require('./src/api')
+const v1Router = require('./src/v1/api')
 
 const port = process.env.port || 3000
 
-app.use('/api/V1', apiRouter)
+app.use('/api/V1', v1Router)
 
 app.get('*', (req, res) => {
   res.send('Backend server for the Weather App frontend. Request GET /api/V1/recommend?lat=xxx&lon=xxx')
