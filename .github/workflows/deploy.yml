@@ -16,9 +16,9 @@ on:
 env:
   GITHUB_SHA: ${{ github.sha }}
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
-  IBM_CLOUD_REGION: us-south
+  IBM_CLOUD_REGION: eu-central
   ICR_NAMESPACE: ${{ secrets.ICR_NAMESPACE }}
-  REGISTRY_HOSTNAME: us.icr.io
+  REGISTRY_HOSTNAME: de.icr.io
   IMAGE_NAME: verteilte-systeme-weather-app
   IKS_CLUSTER: th-uni-projects
   DEPLOYMENT_NAME: verteilte-systeme-weather-app
@@ -45,7 +45,7 @@ jobs:
       # Authenticate with IBM Cloud CLI
       - name: Authenticate with IBM Cloud CLI
         run: |
-          ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g default
+          ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g Default
           ibmcloud cr region-set "${IBM_CLOUD_REGION}"
           ibmcloud cr login
 
