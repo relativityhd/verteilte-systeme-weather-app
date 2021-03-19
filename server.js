@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const v1Router = require('./src/v1/api')
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 30922
 
 app.use('/api/V1', v1Router)
 
