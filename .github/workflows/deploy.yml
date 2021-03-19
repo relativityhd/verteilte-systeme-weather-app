@@ -22,7 +22,7 @@ env:
   IMAGE_NAME: verteilte-systeme-weather-app
   IKS_CLUSTER: th-uni-projects
   DEPLOYMENT_NAME: verteilte-systeme-weather-app
-  PORT: 5001
+  PORT: 30922
 
 jobs:
   setup-build-publish-deploy:
