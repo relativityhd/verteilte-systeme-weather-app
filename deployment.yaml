@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: verteilte-systeme-weather-app
+  name: verteilte-systeme-weather-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: verteilte-systeme-weather-app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: verteilte-systeme-weather-app
+    spec:
+      containers:
+        - image: de.icr.io/th-uni-projects/verteilte-systeme-weather-app:eb6b11d5eafc449c841be9d61f549faf4f1441a4
+          name: verteilte-systeme-weather-app
+          resources: {}
+status: {}
