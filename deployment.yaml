@@ -18,7 +18,12 @@ spec:
         app: verteilte-systeme-weather-app
     spec:
       containers:
-        - image: de.icr.io/th-uni-projects/verteilte-systeme-weather-app:eb6b11d5eafc449c841be9d61f549faf4f1441a4
+        - image: de.icr.io/th-uni-projects/verteilte-systeme-weather-app:latest
           name: verteilte-systeme-weather-app
           resources: {}
+          envFrom:
+            - configMapRef:
+                name: weather-app-config
+            - secretRef:
+                name: weather-app-secret
 status: {}
