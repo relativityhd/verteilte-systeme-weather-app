@@ -7,6 +7,16 @@ const port = process.env.PORT || 30922
 
 app.use('/api/V1', v1Router)
 
+// For Debuging
+app.get('/env', (req, res) => {
+  res.status(200).json({
+    apikey: process.env.OPEN_WEATHER_API_KEY ? 'defined' : 'undefined',
+    timeout: process.env.TIMEOUT || 'undefined',
+    url: process.env.OPEN_WEATHER_API || 'undefined',
+    port: process.env.PORT || 'undefined'
+  })
+})
+
 app.get('*', (req, res) => {
   res.send('Backend server for the Weather App frontend. Request GET /api/V1/recommend?lat=xxx&lon=xxx')
 })
