@@ -2,9 +2,7 @@
 
 Portfolioprüfung für das Fach Verteilte Systeme
 
-```sh
-https://159.122.175.119:30922/api/V1/recommend?lat=48.764218&lon=9.168190
-```
+<http://159.122.175.119:30922/api/V1/recommend?lat=48.764218&lon=9.168190>
 
 ## API v1
 
@@ -84,6 +82,22 @@ The workflow depends on two Repository Secrets: `ICR_NAMESPACE` and `IBM_CLOUD_A
 
 Steps 4. and 5. are the building steps, where the workflow builds a Docker Image based on the provided `Dockerfile` which is just a simple NodeJS Docker Image. This Image then gets pushed to the IBM Container Registry. In the last Step the Image gets pulled from the IBM Container Regsitry into the IBM Kubernetes Service. This step uses the `deployment.yaml` and the `service.yaml` files.
 
+### Docker
+
+The docker image can locally be build with the command:
+
+```sh
+docker build -t weather-app:latest .
+```
+
+This tags the image with `weather-app:latest` and it can be runned in a container with the command:
+
+```sh
+docker run -p 80:30922 weather-app:latest
+```
+
+This will start the server in a docker container and can be accessed via `http://localhost:80`. The `-p 80:30922` bind the container port `30922` to the local machines port `80`, so it can be accessed. To do so the containers port `30922` must be exposed in the image build via `EXPOSE 30922`.
+
 ### Configmap
 
 The two environment variables `TIMEOUT` and `OPEN_WEATHER_API` are stored in a configmap on the IBM Kubernetes Service, created with the command:
@@ -117,3 +131,7 @@ kubectl create service nodeport $DEPLOYMENT_NAME --tcp=80:$PORT --dry-run -o yam
 ```
 
 and later edited, so they consume the configmap and the secret. The variables where defined in the workflow environment.
+
+The service uses a NodePort binding to publish the server under the port `30922`. Since the IP of the projects cluster in the IBM cloud is `159.122.175.119`, the server (api) can be accessed via:
+
+<http://159.122.175.119:30922/api/V1/recommend?lat=48.764218&lon=9.168190>
