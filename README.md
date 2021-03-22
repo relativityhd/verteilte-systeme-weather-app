@@ -23,9 +23,9 @@ Returncodes:
 
 ```json
 {
-  "clothes": "tshirt" | "sweater" | "coat",
-  "risk": "low" | "moderate" | "high",
-  "umbrella": "no" | "yes"
+  "clothes": "tshirt | sweater | coat",
+  "risk": "low | moderate | high",
+  "umbrella": "no | yes"
 }
 ```
 
