@@ -36,7 +36,7 @@ Returncodes:
 
 ## Code-Structure
 
-In the `server.js` is an ExpressJS server implemented, which uses the (later different) API versions (v1 etc.) from the `src` folder. The V1 API is implemented via an Express Router in the `src/v1/api.js` and uses functions defined in the `src/v1/logic.js`. This Structure allows to easily add more API versions and helps keeping the Code clear and understandable.
+In the `server.js` is an ExpressJS server implemented, which uses the (later different) API versions (v1 etc.) from the `src` folder. The V1 API is implemented via an Express Router in the `src/v1/api.js` and uses functions defined in the `src/v1/logic.js`. This Structure allows to easily add more API versions and helps keeping the Code clear and understandable. The deployment specifications can be found in the `deployment` directory.
 
 ## Environment & Secrets
 
@@ -87,7 +87,7 @@ Steps 4. and 5. are the building steps, where the workflow builds a Docker Image
 The docker image can locally be build with the command:
 
 ```sh
-docker build -t weather-app:latest .
+docker build -t weather-app:latest -f ./deployment/Dockerfile .
 ```
 
 This tags the image with `weather-app:latest` and it can be runned in a container with the command:
