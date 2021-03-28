@@ -80,14 +80,14 @@ There is one deploy workflow which is triggered at every new release, defined by
 
 The workflow depends on two Repository Secrets: `ICR_NAMESPACE` and `IBM_CLOUD_API_KEY`. These were added in the Repository Settings. The workflow also is setup via workflow specific environment variables which are specified in the file. (III. of 12 Factor App Model)
 
-Steps 4. and 5. are the building steps, where the workflow builds a Docker Image based on the provided `Dockerfile` which is just a simple NodeJS Docker Image. This Image then gets pushed to the IBM Container Registry. In the last Step the Image gets pulled from the IBM Container Regsitry into the IBM Kubernetes Service. This step uses the `deployment.yaml` and the `service.yaml` files.
+Steps 4. and 5. are the building steps, where the workflow builds a Docker Image based on the provided `Dockerfile` which is just a simple NodeJS Docker Image. This Image then gets pushed to the IBM Container Registry. In the last Step the Image gets pulled from the IBM Container Regsitry into the IBM Kubernetes Service. This step uses the `deployment/deployment.yaml` and the `deployment/service.yaml` files.
 
 ### Docker
 
 The docker image can locally be build with the command:
 
 ```sh
-docker build -t weather-app:latest -f ./deployment/Dockerfile .
+docker build -t weather-app:latest .
 ```
 
 This tags the image with `weather-app:latest` and it can be runned in a container with the command:
@@ -108,7 +108,7 @@ kubectl create configmap weather-app-config \
   --from-literal=OPEN_WEATHER_API=https://api.openweathermap.org/data/2.5/onecall
 ```
 
-This configmap is then consumend in the deploy step defined in the `deployment.yaml` via the `envFrom` `configMapRef`.
+This configmap is then consumend in the deploy step defined in the `deployment/deployment.yaml` via the `envFrom` `configMapRef`.
 
 ### Secrets
 
@@ -119,11 +119,11 @@ kubectl create secret generic weather-app-secret \
   --from-literal=OPEN_WEATHER_API_KEY=*SECRET_API_KEY_HERE*
 ```
 
-This secret is then consumend in the deploy step defined in the `deployment.yaml` via the `envFrom` `secretRef`.
+This secret is then consumend in the deploy step defined in the `deployment/deployment.yaml` via the `envFrom` `secretRef`.
 
 ### Deployment & Service
 
-The `deployment.yaml` and `secret.yaml` where both created with the commands:
+The `deployment/deployment.yaml` and `secret.yaml` where both created with the commands:
 
 ```sh
 kubectl create deployment $DEPLOYMENT_NAME --image=$REGISTRY_HOSTNAME/$ICR_NAMESPACE/$IMAGE_NAME:latest --dry-run -o yaml
