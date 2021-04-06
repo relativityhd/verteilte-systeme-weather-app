@@ -11,4 +11,4 @@ COPY . .
 # Expose the port 30922
 EXPOSE 30922
 # Set the start command of the image
-CMD [ "node", "server.js" ]
+CMD [ "node", "src/server.js" ]

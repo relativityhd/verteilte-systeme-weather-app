@@ -1,8 +1,12 @@
-# verteilte-systeme-weather-app
+# Verteilte Systeme Portfolio: Weather App
 
-Portfolioprüfung für das Fach Verteilte Systeme
+Portfolio for the class Verteilte Systeme. You can find the Repository [here](https://github.com/relativityhd/verteilte-systeme-weather-app).
 
-<http://159.122.175.119:30922/api/V1/recommend?lat=48.764218&lon=9.168190>
+The app is hosted on the IBM Cloud until end of April 2021 and can be viewed here:
+
+```sh
+curl http://159.122.175.119:30922/api/V1/recommend?lat=48.764218&lon=9.168190
+```
 
 ## API v1
 
@@ -36,7 +40,7 @@ Return codes:
 
 ## Code-Structure
 
-In the `server.js` is an ExpressJS server implemented, which uses the (later different) API versions (v1 etc.) from the `src` folder. The V1 API is implemented via an Express Router in the `src/v1/api.js` and uses functions defined in the `src/v1/logic.js`. This Structure allows to easily add more API versions and helps to keep the Code clear and understandable. The deployment specifications can be found in the `deployment` directory.
+In the `src/server.js` is an ExpressJS server implemented, which uses the (later different) API versions (v1 etc.) from the `src` folder. The V1 API is implemented via an Express Router in the `src/v1/api.js` and uses functions defined in the `src/v1/logic.js`. This Structure allows to easily add more API versions and helps to keep the Code clear and understandable. The deployment specifications can be found in the `deployment` directory.
 
 ## Environment & Secrets
 
@@ -82,6 +86,8 @@ The workflow depends on two Repository Secrets: `ICR_NAMESPACE` and `IBM_CLOUD_A
 
 Steps 4. and 5. are the building steps, where the workflow builds a Docker Image based on the provided `Dockerfile` which is just a simple NodeJS Docker Image. This Image then gets pushed to the IBM Container Registry. In the last step, the image gets pulled from the IBM Container Registry into the IBM Kubernetes Service. This step uses the `deployment/deployment.yaml` and the `deployment/service.yaml` files.
 
+The workflow uses all the commands for the Docker and Kubernetes Services which are described below. If you can't reproduce a command below then try to copy the workflows commands!
+
 ### Docker
 
 The docker image can locally be built with the command:
@@ -98,7 +104,11 @@ docker run -p 80:30922 weather-app:latest
 
 This will start the server in a docker container and can be accessed via `http://localhost:80`. The `-p 80:30922` bind the container port `30922` to the local machines port `80`, so it can be accessed. To do so the container's port `30922` must be exposed in the image build via `EXPOSE 30922`.
 
-### Configmap
+### Kubernetes
+
+For the following commands you must be connected to a kubectl service, like the IBM Kubernetes Service or MiniKube.
+
+#### Configmap
 
 The two environment variables `TIMEOUT` and `OPEN_WEATHER_API` are stored in a configmap on the IBM Kubernetes Service, created with the command:
 
@@ -110,7 +120,7 @@ kubectl create configmap weather-app-config \
 
 This configmap is then consumed in the deploy step defined in the `deployment/deployment.yaml` via the `envFrom` `configMapRef`.
 
-### Secrets
+#### Secrets
 
 The secret variable `OPEN_WEATHER_API_KEY` is stored in a secret on the IBM Kubernetes Service, created with the command:
 
@@ -121,7 +131,7 @@ kubectl create secret generic weather-app-secret \
 
 This secret is then consumed in the deploy step defined in the `deployment/deployment.yaml` via the `envFrom` `secretRef`.
 
-### Deployment & Service
+#### Deployment & Service
 
 The `deployment/deployment.yaml` and `secret.yaml` were both created with the commands:
 

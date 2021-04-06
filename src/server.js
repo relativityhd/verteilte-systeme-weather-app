@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-const v1Router = require('./src/v1/api')
+const v1Router = require('./v1/api')
 
 // Set port, if no PORT is set in the environment, set to 30922
 const port = process.env.PORT || 30922
